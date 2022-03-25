@@ -1,0 +1,2 @@
+tim@gmail.com;1234;tim;2019-03-02
+test@hotmail.fr;1234;fayed;2022-03-25
