@@ -1,9 +1,9 @@
 <CreateAccountWindow>:
     name: "create"
 
-    namee: namee
+    username: username
+    password: password
     email: email
-    password: passw
 
     FloatLayout:
         cols:1
@@ -26,7 +26,7 @@
             TextInput:
                 pos_hint: {"x":0.5, "top":0.8}
                 size_hint: 0.4, 0.12
-                id: namee
+                id: username
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
@@ -52,7 +52,7 @@
             TextInput:
                 pos_hint: {"x":0.5, "top":0.8-0.13*2}
                 size_hint: 0.4, 0.12
-                id: passw
+                id: password
                 multiline: False
                 password: True
                 font_size: (root.width**2 + root.height**2) / 14**4
@@ -78,7 +78,7 @@
 
 <LoginWindow>:
     name: "login"
-
+    
     email: email
     password: password
 
@@ -94,6 +94,7 @@
             id: email
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
+            write_tab: False
             pos_hint: {"x": 0.45 , "top":0.9}
             size_hint: 0.4, 0.15
 
@@ -107,6 +108,7 @@
             id: password
             font_size: (root.width**2 + root.height**2) / 13**4
             multiline: False
+            write_tab: False
             password: True
             pos_hint: {"x": 0.45, "top":0.7}
             size_hint: 0.4, 0.15
@@ -131,28 +133,33 @@
 
 
 <MainWindow>:
-    n: n
-    email: email
-    created:created
+    name:'main'
+
+    goal:goal
 
     FloatLayout:
         Label:
-            id: n
+            id: user_id
             pos_hint:{"x": 0.1, "top":0.9}
             size_hint:0.8, 0.2
-            text: "Account Name: "
+            text: "Goal: "
 
-        Label:
-            id: email
-            pos_hint:{"x": 0.1, "top":0.7}
-            size_hint:0.8, 0.2
-            text: "Email: "
+        TextInput:
+            id: goal
+            font_size: (root.width**2 + root.height**2) / 13**4
+            multiline: False
+            write_tab: False
+            pos_hint: {"x": 0.45 , "top":0.7}
+            size_hint: 0.4, 0.15
 
-        Label:
-            id: created
-            pos_hint:{"x": 0.1, "top":0.5}
-            size_hint:0.8, 0.2
-            text: "Created: "
+
+        Button:
+            pos_hint:{"x":0.4, "y": 0.3}
+            size_hint:0.6,0.2
+            text: "Confirm Goal"
+            on_release:
+                root.manager.transition.direction = "down"
+                root.goalBtn()
 
         Button:
             pos_hint:{"x":0.2, "y": 0.1}
