@@ -1,3 +1,8 @@
+<Label>:
+    color: 0.3, 0.3, 0.7, 1
+    multiline: False
+    write_tab: False
+    
 <CreateAccountWindow>:
     name: "create"
 
@@ -24,9 +29,9 @@
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
+                id: username
                 pos_hint: {"x":0.5, "top":0.8}
                 size_hint: 0.4, 0.12
-                id: username
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
@@ -37,9 +42,9 @@
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
+                id: email
                 pos_hint: {"x":0.5, "top":0.8-0.13}
                 size_hint: 0.4, 0.12
-                id: email
                 multiline: False
                 font_size: (root.width**2 + root.height**2) / 14**4
 
@@ -50,9 +55,9 @@
                 font_size: (root.width**2 + root.height**2) / 14**4
 
             TextInput:
+                id: password
                 pos_hint: {"x":0.5, "top":0.8-0.13*2}
                 size_hint: 0.4, 0.12
-                id: password
                 multiline: False
                 password: True
                 font_size: (root.width**2 + root.height**2) / 14**4
@@ -60,8 +65,8 @@
         Button:
             pos_hint:{"x":0.3,"y":0.25}
             size_hint: 0.4, 0.1
-            font_size: (root.width**2 + root.height**2) / 17**4
-            text: "Already have an Account? Log In"
+            font_size: (root.width**2 + root.height**2) / 13**4
+            text: "Already an account? Log In"
             on_release:
                 root.manager.transition.direction = "left"
                 root.login()
@@ -70,7 +75,7 @@
             pos_hint:{"x":0.2,"y":0.05}
             size_hint: 0.6, 0.15
             text: "Submit"
-            font_size: (root.width**2 + root.height**2) / 14**4
+            font_size: (root.width**2 + root.height**2) / 13**4
             on_release:
                 root.manager.transition.direction = "left"
                 root.submit()
@@ -107,8 +112,6 @@
         TextInput:
             id: password
             font_size: (root.width**2 + root.height**2) / 13**4
-            multiline: False
-            write_tab: False
             password: True
             pos_hint: {"x": 0.45, "top":0.7}
             size_hint: 0.4, 0.15
@@ -125,46 +128,135 @@
         Button:
             pos_hint:{"x":0.3,"y":0.3}
             size_hint: 0.4, 0.1
-            font_size: (root.width**2 + root.height**2) / 17**4
-            text: "Don't have an Account? Create One"
+            font_size: (root.width**2 + root.height**2) / 14**4
+            text: "No Account? Create One"
             on_release:
                 root.manager.transition.direction = "right"
                 root.createBtn()
 
+<SetupGoalWindow>:
+    name:'setupgoal'
 
-<MainWindow>:
-    name:'main'
+    push_up:push_up
+    push_up_time:push_up_time
+    pull_up:pull_up
+    pull_up_time:pull_up_time
+    abdo:abdo
+    abdo_time:abdo_time
+    squat:squat
+    squat_time:squat_time
 
-    goal:goal
-
+    # first layout: goals and goals time label 
     FloatLayout:
-        Label:
-            id: user_id
-            pos_hint:{"x": 0.1, "top":0.9}
-            size_hint:0.8, 0.2
-            text: "Goal: "
+        cols:1
+        FloatLayout:
+            cols:4
+            size: root.width, root.height/2
 
-        TextInput:
-            id: goal
-            font_size: (root.width**2 + root.height**2) / 13**4
-            multiline: False
-            write_tab: False
-            pos_hint: {"x": 0.45 , "top":0.7}
-            size_hint: 0.4, 0.15
+            # PUSH UP
+            Label:
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0, 'top':0.95}
+                size_hint:0.25, 0.2
+                text: 'Push Up'
+
+            TextInput:
+                id: push_up
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint: {'x': 0 , 'top':0.8}
+                size_hint: 0.25, 0.1
+
+            Button:
+                id:push_up_time
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0, 'top':0.7}
+                size_hint:0.25, 0.1
+                text:'Goal End'
+                on_press: root.show_date_push_up()
+
+            # PULL UP
+            Label:
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.25, 'top':0.95}
+                size_hint:0.25, 0.2
+                text: 'Pull Up'
+
+            TextInput:
+                id: pull_up
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint: {'x': 0.25 , 'top':0.8}
+                size_hint: 0.25, 0.1
+
+            Button:
+                id:pull_up_time
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.25, 'top':0.7}
+                size_hint:0.25, 0.1
+                text:'Goal End'
+                on_press: root.show_date_pull_up()
+         
+            # ABDO
+            Label:
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.5, 'top':0.95}
+                size_hint:0.25, 0.2
+                text: 'Abdo'
+
+            TextInput:
+                id: abdo
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint: {'x': 0.5 , 'top':0.8}
+                size_hint: 0.25, 0.1
+
+            Button:
+                id:abdo_time
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.5, 'top':0.7}
+                size_hint:0.25, 0.1
+                text:'Goal End'
+                on_press: root.show_date_abdo()
+
+            # SQUAT
+            Label:
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.75, 'top':0.95}
+                size_hint:0.25, 0.2
+                text: 'Squat'
+
+            TextInput:
+                id: squat
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint: {'x': 0.75, 'top':0.8}
+                size_hint: 0.25, 0.1
+
+            Button:
+                id:squat_time
+                font_size: (root.width**2 + root.height**2) / 13**4
+                pos_hint:{'x': 0.75, 'top':0.7}
+                size_hint:0.25, 0.1
+                text:'Goal End'
+                on_press: root.show_date_squat()
 
 
         Button:
-            pos_hint:{"x":0.4, "y": 0.3}
-            size_hint:0.6,0.2
+            pos_hint:{"x":0.3, "y": 0.25}
+            size_hint: 0.5, 0.2
+            font_size: (root.width**2 + root.height**2) / 13**4
             text: "Confirm Goal"
             on_release:
-                root.manager.transition.direction = "down"
+                root.manager.transition.direction = "right"
                 root.goalBtn()
 
-        Button:
-            pos_hint:{"x":0.2, "y": 0.1}
-            size_hint:0.6,0.2
-            text: "Log Out"
-            on_release:
-                app.root.current = "login"
-                root.manager.transition.direction = "down"
+        FloatLayout:
+            Button:
+                pos_hint:{"x":0.05, "y": 0.05}
+                size_hint:0.1, 0.1
+                font_size: (root.width**2 + root.height**2) / 14**4
+                text: "Logout"
+                on_release:
+                    app.root.current = "login"
+                    root.manager.transition.direction = "down"
+
+# main style for textinput: multiline/write tab probably false
+# main style layout for button
+# main position for button (home, back)

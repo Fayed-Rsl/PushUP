@@ -47,18 +47,21 @@ class Database:
         except SqlError as e:
             print(f"Error ID: Create _User. The error '{e}' occurred")
 
-
     def create_user_goal(self):
-        '''create user goal table
-        user_id:str (unique)
-        goal:int '''
+        '''create user goal table and how long to achieve the goal
+        user_id:rowid of user'''
         try:
             self.conn.execute('''CREATE TABLE IF NOT EXISTS _UserGoal
                     (user_id INT NOT NULL PRIMARY KEY UNIQUE,
                     push_up INT NOT NULL,
+                    push_up_time DATE NOT NULL,
                     pull_up INT NOT NULL,
+                    pull_up_time DATE NOT NULL,
                     abdo INT NOT NULL,
-                    squat INT NOT NULL)''')
+                    abdo_time DATE NOT NULL,
+                    squat INT NOT NULL,
+                    squat_time DATE NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES _User (user_id))''')
             self.conn.commit()
             print(f'UserGoal Table successfully created.')
         except SqlError as e:
@@ -67,10 +70,7 @@ class Database:
     def create_userdata_table(self):
         '''create userdata table that will store every data of users
         user_id:rowid of user
-        push_up:int
-        pull_up:int
-        abdo:int
-        day:date'''
+        '''
         try:
             self.conn.execute('''CREATE TABLE IF NOT EXISTS _UserData
                     (user_id INT NOT NULL,
@@ -79,7 +79,8 @@ class Database:
                     abdo INT NOT NULL,
                     squat INT NOT NULL,
                     day DATE NOT NULL,
-                    PRIMARY KEY (USER_ID, DAY) )''') # composite key: USER_ID + DAY
+                    PRIMARY KEY (USER_ID, DAY),
+                    FOREIGN KEY (user_id) REFERENCES _User (user_id))''') # composite key: USER_ID + DAY
             self.conn.commit()
             print(f'User DataTable successfully created.')
 
@@ -100,10 +101,12 @@ class Database:
 
     def insert_goal(self, value:tuple):
         '''insert goal user in the _UserGoal table
-        value:tuple (user_id, goal)'''
+        value:tuple (user_id, push_up, push_up_time, pull_up, pull_up_time,
+        abdo, abdo_time, squat, squat_time)'''
         try:
-            self.cursor.execute('''INSERT INTO _UserGoal (user_id, goal)
-            VALUES (?, ?)''', value)
+            self.cursor.execute('''INSERT INTO _UserGoal (user_id, push_up,
+            push_up_time, pull_up, pull_up_time, abdo, abdo_time, squat, squat_time)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? )''', value)
             self.conn.commit()
             print(f'UserGoal {value} successfully inserted in Database.')
         except SqlError as e:
@@ -146,10 +149,24 @@ class Database:
         except SqlError as e:
             print(f"Error ID: Get UserID. The error '{e}' occurred")
 
+    def check_user_goal(self, value:tuple):
+        '''check if user already have a goal
+        value:tuple (user_id)
+        return:bool 1 or 0'''
+        try:
+            self.cursor.execute('''SELECT * FROM _UserGoal WHERE user_id = ? ''', value)
+            CHECK = self.cursor.fetchone()
+            
+            # if user has a goal return 1
+            if CHECK != None: return 1
+            else: return 0 
+        except SqlError as e:
+            print(f"Error ID: Check Goal. The error '{e}' occurred")
+
     def check_primary_key(self, value:tuple):
         '''check if user already entered data today.
         value:tuple (user_id, day)
-        return 1 or 0'''
+        return:bool 1 or 0'''
         try:
             self.cursor.execute('''SELECT user_id, day FROM _UserData WHERE user_id = ? AND day = ? ''', value)
             CHECK = self.cursor.fetchone()
@@ -178,3 +195,8 @@ class Database:
     def get_date():
         '''function to get today date'''
         return date.today().strftime('%Y-%m-%d')
+
+
+#load data
+# df = pandas.read_csv(csvfile)
+# df.to_sql('nom de ma table', conn, if_exists='append', index=False)
