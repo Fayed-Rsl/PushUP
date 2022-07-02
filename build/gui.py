@@ -35,92 +35,38 @@ canvas = Canvas(
 )
 
 canvas.place(x = 0, y = 0)
-canvas.create_rectangle(
-    0.0,
-    0.0,
-    375.0,
-    677.0,
-    fill="#000000",
-    outline="")
+button_image_1 = PhotoImage(
+    file=relative_to_assets("button_1.png"))
+button_1 = Button(
+    image=button_image_1,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: print("button_1 clicked"),
+    relief="flat"
+)
+button_1.place(
+    x=30.000000000000455,
+    y=712.0000610351562,
+    width=315.0,
+    height=60.0
+)
 
-canvas.create_rectangle(
-    40.0,
-    589.0,
-    335.0,
-    657.0,
-    fill="#000000",
-    outline="")
+canvas.create_text(
+    148.00000000000045,
+    406.0,
+    anchor="nw",
+    text="Just do it!",
+    fill="#7B6F72",
+    font=("Poppins Regular", 18 * -1)
+)
 
-canvas.create_rectangle(
-    30.0,
-    707.0,
-    97.5,
-    772.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    117.0,
-    707.0,
-    184.5,
-    772.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    195.0,
-    707.0,
-    262.5,
-    772.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    278.0,
-    707.0,
-    345.5,
-    772.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    102.0,
-    61.0,
-    273.0,
-    550.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    55.0,
-    712.0009765625,
-    73.580810546875,
-    766.9990234375,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    144.0,
-    717.0,
-    158.0,
-    763.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    305.0,
-    717.0,
-    319.0,
-    763.0,
-    fill="#000000",
-    outline="")
-
-canvas.create_rectangle(
-    221.0,
-    717.0,
-    236.0,
-    763.0,
-    fill="#000000",
-    outline="")
+canvas.create_text(
+    121.00000000000045,
+    355.0,
+    anchor="nw",
+    text="Push UP",
+    fill="#1D1517",
+    font=("Poppins Bold", 36 * -1)
+)
 window.resizable(False, False)
 window.mainloop()
